@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Refresh Opportunity Analysis</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --accent-bg: #eff6ff;
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            color: var(--secondary);
+            font-size: 2.25rem;
+            margin-bottom: 12px;
+        }
+
+        header .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background-color: var(--accent-bg);
+        }
+
+        section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-top: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        section h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-bg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        section h2 span.section-number {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .abstract-box {
+            background-color: var(--accent-bg);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-top: 16px;
+        }
+
+        .abstract-box h3 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--bg);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: var(--bg);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-high {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+
+        .badge-medium {
+            background-color: #fffbebfb;
+            color: #d97706;
+        }
+
+        .badge-low {
+            background-color: #f0fdf4;
+            color: #16a34a;
+        }
+
+        code, pre {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            padding: 2px 6px;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .warning-box {
+            background-color: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 16px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Title -->
+    <header>
+        <div class="container">
+            <h1>Content Refresh Opportunity Analysis</h1>
+            <p class="subtitle">Identifying and prioritizing high-decay pages for SEO updates, structural overhauls, and traffic recovery.</p>
+        </div>
+    </header>
+
+    <!-- Quick Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#abstract">1. Abstract</a></li>
+            <li><a href="#problem">2. Problem Statement</a></li>
+            <li><a href="#data">3. Data</a></li>
+            <li><a href="#methodology">4. Methodology</a></li>
+            <li><a href="#results">5. Results</a></li>
+            <li><a href="#limitations">6. Limitations</a></li>
+            <li><a href="#recommendations">7. Recommendations</a></li>
+            <li><a href="#reproducibility">8. Reproducibility</a></li>
+            <li><a href="#credits">9. Acknowledgments</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- Section 1: Title + Abstract -->
+        <section id="abstract">
+            <h2><span class="section-number">01.</span> Title & Abstract</h2>
+            <p><strong>Project Name:</strong> Content Decay & Refresh Optimization Report (Lane 2)</p>
+            <div class="abstract-box">
+                <h3>Executive Abstract</h3>
+                <p>This report evaluates search traffic performance across existing content assets to identify pages suffering from organic decay. By combining Google Search Console impressions, click trends, historical publish dates, and target keyword rankings, we isolate pages where a content refresh offers a higher return on investment (ROI) than net-new creation. The final deliverable includes a prioritized roadmap of pages ready for updates.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Introduction / Problem Statement -->
+        <section id="problem">
+            <h2><span class="section-number">02.</span> Introduction / Problem Statement</h2>
+            <p>Over time, high-performing organic content naturally decays due to shifting search intent, out-of-date information, growing competitor quality, or changes to search engine algorithms. Publishing new articles constantly while ignoring legacy content leads to content cannibalization and missed traffic potential.</p>
+            <p><strong>Core Objective:</strong> Identify articles that have lost significant organic impressions or clicks over the last 6–12 months and formulate actionable refresh strategies (e.g., updating data, adding multimedia, fixing search intent mismatch) to reclaim organic market share.</p>
+        </section>
+
+        <!-- Section 3: Data -->
+        <section id="data">
+            <h2><span class="section-number">03.</span> Data Sources & Metrics</h2>
+            <p>The analysis relies on primary organic performance and content metadata collected across the following dimensions:</p>
+            <ul>
+                <li><strong>Google Search Console (GSC):</strong> Clicks, Impressions, CTR, and Average Position (Comparison: Last 90 days vs. Previous Year period).</li>
+                <li><strong>Google Analytics / Content CMS:</strong> Last updated date, word count, bounce rate, and conversion goal completions.</li>
+                <li><strong>SEO Tools (Ahrefs/Semrush):</strong> Backlink profile changes, keyword intent shifts, and top competing URLs.</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Methodology -->
+        <section id="methodology">
+            <h2><span class="section-number">04.</span> Methodology</h2>
+            <p>We apply a four-step framework to qualify pages for the content refresh queue:</p>
+            <ol>
+                <li><strong>Decay Identification:</strong> Filter for pages experiencing a &gt;20% drop in organic clicks year-over-year while retaining moderate impression share.</li>
+                <li><strong>Opportunity Classification:</strong> Group decaying pages into refresh buckets:
+                    <ul>
+                        <li><em>Quick Win:</em> Position 4–15, low effort (update dates/stats).</li>
+                        <li><em>Structural Overhaul:</em> Significant traffic drop, outdated intent or poor UX.</li>
+                        <li><em>Consolidation:</em> Split traffic across multiple thin pages (Prune/301 redirect).</li>
+                    </ul>
+                </li>
+                <li><strong>Scoring & Priority Assignment:</strong> Priority Score = <code>(Historical Clicks × 0.4) + (Impression Delta × 0.4) + (Business Value × 0.2)</code>.</li>
+            </ol>
+        </section>
+
+        <!-- Section 5: Results -->
+        <section id="results">
+            <h2><span class="section-number">05.</span> Analysis & Results</h2>
+            <p>Below is a summary of candidate URLs identified during the scan with high recovery potential:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Target URL / Topic</th>
+                        <th>Impressions Delta</th>
+                        <th>Click Loss</th>
+                        <th>Refresh Bucket</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/blog/top-industry-trends-2023</code></td>
+                        <td>-34%</td>
+                        <td>-52%</td>
+                        <td>Structural Overhaul</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>/guide/beginner-setup-tool</code></td>
+                        <td>-12%</td>
+                        <td>-25%</td>
+                        <td>Quick Win</td>
+                        <td><span class="badge badge-medium">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>/posts/features-list-v1</code></td>
+                        <td>-65%</td>
+                        <td>-80%</td>
+                        <td>Prune & Merge</td>
+                        <td><span class="badge badge-low">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 6: Limitations & Honest Framing -->
+        <section id="limitations">
+            <h2><span class="section-number">06.</span> Limitations & Honest Framing</h2>
+            <div class="warning-box">
+                <p><strong>Key Constraints & Unknowns:</strong></p>
+                <ul>
+                    <li><strong>Algorithm Impact:</strong> Traffic loss resulting from core broad updates may not instantly reverse via simple text updates.</li>
+                    <li><strong>Seasonality:</strong> Certain impression drops correlate with annual business cycles rather than true content decay.</li>
+                    <li><strong>Resource Constraints:</strong> Major structural re-writes require dedicated designer and developer availability for media updates.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 7: Ranked Recommendations -->
+        <section id="recommendations">
+            <h2><span class="section-number">07.</span> Ranked Recommendations</h2>
+            <ol>
+                <li><strong>Immediate Quick Wins (Week 1–2):</strong> Update title tags and top headings for top 5 pages sitting in positions 4–10 to capture instant CTR increases.</li>
+                <li><strong>Content Overhauls (Week 3–6):</strong> Re-write dated statistics, update year references, and insert fresh media assets for high-priority decaying URLs.</li>
+                <li><strong>Content Consolidation (Week 7+):</strong> Implement 301 redirects to merge cannibalizing thin posts into comprehensive master guides.</li>
+            </ol>
+        </section>
+
+        <!-- Section 8: Reproducibility -->
+        <section id="reproducibility">
+            <h2><span class="section-number">08.</span> Reproducibility</h2>
+            <p>To replicate this analysis, run the data pull script against your Search Console export using the parameters below:</p>
+            <pre><code># Python execution snippet for identifying decaying URLs
+import pandas as pd
+
+# Load Search Console 90-day comparison report
+df = pd.read_csv('gsc_comparison_report.csv')
+
+# Calculate performance degradation ratio
+df['click_decay'] = (df['clicks_current'] - df['clicks_previous']) / df['clicks_previous']
+
+# Filter candidates: > 20% click loss with high historical impressions
+refresh_candidates = df[(df['click_decay'] < -0.20) & (df['impressions_previous'] > 1000)]
+print(refresh_candidates.sort_values(by='click_decay'))</code></pre>
+        </section>
+
+        <!-- Section 9: Acknowledgments & Data Credit -->
+        <section id="credits">
+            <h2><span class="section-number">09.</span> Acknowledgments & Data Credit</h2>
+            <ul>
+                <li>Data provided via <strong>Google Search Console API</strong> and internal Web Analytics.</li>
+                <li>Keyword search volumes and SERP benchmark features courtesy of third-party SEO API access.</li>
+            </ul>
+        </section>
+
+    </div>
+
+</body>
+</html>
